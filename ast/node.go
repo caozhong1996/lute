@@ -87,7 +87,7 @@ type Node struct {
 
 	// 链接
 
-	LinkType     int    `json:",omitempty"` // 链接类型，0：内联链接 [foo](/bar)，1：链接引用定义 [foo]: /bar，2：自动链接，3：链接引用 [foo]
+	LinkType     int    `json:",omitempty"` // 链接类型，0：内联链接 [foo](/bar)，1：链接引用定义 [foo]: /bar，2：自动链接，3：链接引用 [foo]，8: 火星名片!@仲达@(8659)
 	LinkRefLabel []byte `json:",omitempty"` // 链接引用 label，[label] 或者 [text][label] 形式，[label] 情况下 text 和 label 相同
 
 	// 标题
@@ -821,6 +821,10 @@ const (
 	NodeFileAnnotationRefID    NodeType = 541 // 被引用的文件注解 ID（file/annotation）
 	NodeFileAnnotationRefSpace NodeType = 542 // 被引用的文件注解 ID 和文件注解引用锚文本之间的空格
 	NodeFileAnnotationRefText  NodeType = 543 // 文件注解引用锚文本（不能为空，如果为空的话会自动使用 ID 渲染）
+
+	// 自定义节点类型
+	NodeUserCard      		NodeType = 800 // 火星名片节点
+	NodeAt      					NodeType = 801 // @
 
 	NodeTypeMaxVal NodeType = 1024 // 节点类型最大值
 )

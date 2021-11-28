@@ -150,6 +150,8 @@ func NewHtmlRenderer(tree *parse.Tree, options *Options) *HtmlRenderer {
 	ret.RendererFuncs[ast.NodeGitConflictOpenMarker] = ret.renderGitConflictOpenMarker
 	ret.RendererFuncs[ast.NodeGitConflictContent] = ret.renderGitConflictContent
 	ret.RendererFuncs[ast.NodeGitConflictCloseMarker] = ret.renderGitConflictCloseMarker
+	ret.RendererFuncs[ast.NodeUserCard] = ret.renderUserCard
+	ret.RendererFuncs[ast.NodeAt] = ret.renderAt
 	return ret
 }
 
@@ -1176,4 +1178,24 @@ func (r *HtmlRenderer) handleKramdownBlockIAL(node *ast.Node) {
 		// 第一项必须是 ID
 		node.KramdownIAL[0][0] = r.Options.KramdownIALIDRenderName
 	}
+}
+
+func (r *HtmlRenderer) renderUserCard(node *ast.Node, entering bool) ast.WalkStatus {
+	if entering {
+		r.LinkTextAutoSpacePrevious(node)
+
+		cardName := node.ChildByType(ast.NodeLinkText)
+		dest := node.ChildByType(ast.NodeLinkDest)
+		r.WriteString("<a class=\"user-card\" wtc_click_listener>" + string(cardName.Tokens) + string(dest.Tokens))
+	} else {
+		r.Tag("/a", nil, false)
+
+		r.LinkTextAutoSpaceNext(node)
+	}
+	return ast.WalkContinue
+}
+
+func (r *HtmlRenderer) renderAt(node *ast.Node, entering bool) ast.WalkStatus {
+	// 暂不添加此节点的渲染方式
+	return ast.WalkContinue
 }

@@ -49,6 +49,7 @@ const (
 	ItemCaret          = byte('^')
 	ItemOpenBrace      = byte('{')
 	ItemCloseBrace     = byte('}')
+	ItemAt     				 = byte('@')
 )
 
 // IsWhitespace 判断 token 是否是空白。

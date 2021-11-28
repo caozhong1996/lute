@@ -66,6 +66,8 @@ func (t *Tree) parseInline(block *ast.Node, ctx *InlineContext) {
 			n = t.parseHeadingID(block, ctx)
 		case lex.ItemOpenParen:
 			n = t.parseBlockRef(ctx)
+		case lex.ItemAt:
+			n = t.parseUserCard(ctx)
 		default:
 			n = t.parseText(ctx)
 		}
